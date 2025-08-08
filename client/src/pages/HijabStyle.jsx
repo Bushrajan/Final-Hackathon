@@ -1,0 +1,47 @@
+import { useEffect, useState } from 'react';
+import HijabCard from '../components/HijabCard'; 
+import axios from 'axios';
+
+const HijabStyle = () => {
+  const [styles, setStyles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchStyles = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:2525/api/hijab/seed');
+        setStyles(data);
+      } catch (err) {
+        setError('Failed to load hijab styles');
+        console.error('Hijab styles fetch error:', err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStyles();
+  }, []);
+
+  if (loading) {
+    return <div className="p-4 text-gray-600">Loading hijab styles...</div>;
+  }
+
+  if (error) {
+    return <div className="p-4 text-red-500">{error}</div>;
+  }
+
+  if (!styles.length) {
+    return <div className="p-4 text-gray-500">No hijab styles found.</div>;
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+      {styles.map(style => (
+        <HijabCard key={style._id} style={style} />
+      ))}
+    </div>
+  );
+};
+
+export default HijabStyle;

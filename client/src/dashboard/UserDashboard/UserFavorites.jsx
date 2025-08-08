@@ -19,7 +19,7 @@ const UserFavorites = () => {
 
   return (
     <div className=" rounded-lg shadow p-6">
-      <h2 className="text-xl text-white font-bold mb-4">💗Favorite Blocks</h2>
+      <h2 className="text-xl text-white font-bold mb-4">💗Favorite Hijabs</h2>
       {favorites.length === 0 ? (
         <p className="text-gray-500">No favorites found.</p>
       ) : (

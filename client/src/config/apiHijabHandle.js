@@ -1,9 +1,9 @@
 import axios from "axios"
 
-export const baseUrl = `http://localhost:2525/api/auth` 
+export const baseUrl = `http://localhost:2525/api/hijab` 
 // export const baseUrl = `https://final-hackathon-server-ten.vercel.app/api/auth` 
 
-export const apiAuthHandle = axios.create({
+export const apiHijabHandle = axios.create({
     baseURL: baseUrl,
     headers: {
         'Content-Type': 'application/json',

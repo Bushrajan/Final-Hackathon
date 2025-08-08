@@ -1,17 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaUser, FaUsers, FaCube, FaChartLine, FaCog, FaHeart, FaUserShield, FaUserLock, FaFile } from 'react-icons/fa';
+import { FaUser, FaUsers , FaChartLine, FaCog, FaHeart, FaUserShield, FaUserLock, FaFile } from 'react-icons/fa';
 import {
   getUser, set_verification_Email, setToken,
   setUser as set_user_localStorage, removeUser, setUser
 } from '../utils/auth';
-import { apiAuthHandle } from '../config/apiAuthHandle.js';
-import axios from 'axios';
+import { apiAuthHandle } from '../config/apiAuthHandle.js'; 
 import apiUploadHandle from '../config/apiUploadHandle.js';
 import toast, { Toaster } from 'react-hot-toast';
 // Blog API removed
 import { useNavigate } from 'react-router-dom';
 import { ImProfile } from "react-icons/im";
-import { MdOutlineQuestionAnswer } from "react-icons/md";
+import {  MdPhoto } from "react-icons/md";
 
 import UserProfile from '../dashboard/UserDashboard/UserProfile';
 import UserFavorites from '../dashboard/UserDashboard/UserFavorites';
@@ -20,10 +19,9 @@ import AdminDashboard from '../dashboard/AdminDashboard/AdminDashboard';
 import AdminProfile from '../dashboard/AdminDashboard/AdminProfile';
 import AdminSettings from '../dashboard/AdminDashboard/AdminSettings';
 import AdminUsers from '../dashboard/AdminDashboard/AdminUsers';
-import AllQuries from '../dashboard/AdminDashboard/AllQuries.jsx';
-import UserQuires from '../dashboard/UserDashboard/UserQuries.jsx';
-import apiQueryHandle from '../config/apiQueryHandle.js';
+import AllQuries from '../dashboard/AdminDashboard/AllQuries.jsx'; 
 import apiAdminAnsHandle from '../config/apiAdminAnsHandle.js';
+import HijabStyle from './HijabStyle.jsx';
 
 const Dashboard = () => {
 
@@ -318,7 +316,8 @@ const Dashboard = () => {
     // { id: 'home', label: 'Home', icon: FaHome },
     // { id: 'dashboard', label: 'Dashboard', icon: FaChartLine },
     { id: 'profile', label: 'Profile', icon: ImProfile },
-    { id: 'quires', label: 'My Quires', icon: MdOutlineQuestionAnswer },
+    // { id: 'quires', label: 'My Quires', icon: MdOutlineQuestionAnswer },
+    { id: 'hihabgallary', label: 'Hijab Gallary', icon: MdPhoto },
     { id: 'favorites', label: 'Favorites', icon: FaHeart },
     { id: 'settings', label: 'Settings', icon: FaCog },
     { id: 'login', label: 'Login', icon: FaUserShield },
@@ -435,8 +434,10 @@ const Dashboard = () => {
           return goto('/dashboard');
         case 'profile':
           return <UserProfile currentUser={currentUser} />;
-        case 'quires':
-          return <UserQuires goto={goto} />;
+        case 'hihabgallary':
+          return <HijabStyle/>;
+        // case 'quires':
+        //   return <UserQuires goto={goto} />;
         case 'favorites':
           return <UserFavorites />;
         case 'settings': return <UserSettings updateUser={updateUser} updateImage={updateImage} handleUserSettingsChange={handleUserSettingsChange} handleImageChange={handleImageChange} handleUpdateProfile={handleUpdateProfile} handleLogout={handleLogout} currentUser={currentUser} />;

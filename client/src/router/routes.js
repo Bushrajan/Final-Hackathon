@@ -5,6 +5,7 @@ import Dashboard from '../pages/Dashboard';
 import HomePage from '../pages/HomePage';
 import ForgetPassword from '../pages/ForgetPassword';
 import ResetPassword from '../pages/ResetPassword';
+import HijabStyle from '../pages/HijabStyle';
 // ...existing code...
 
 // Public routes
@@ -58,4 +59,5 @@ export const userRoutes = [
     component: HomePage,
     name: 'Home',
   },
+   
 ];

@@ -1,10 +1,10 @@
 import Review from '../models/review.js';
-import HijabStyle from '../models/HijabStyle.js';
+import HijabStyle from '../models/style.js';
 
 // ✍️ Create a review
 export const createReview = async (req, res) => {
   const { rating, text } = req.body;
-  const userId = req.user._id;
+  const userId = req.user?.id || req.user?._id;
   const hijabStyleId = req.params.id;
 
   try {
