@@ -1,73 +1,3 @@
-// import { useState, useEffect } from 'react';
-// import ReviewModal from './ReviewModal'; 
-// import axios from 'axios';
-
-// const HijabCard = ({ style }) => {
-//   const [reviews, setReviews] = useState([]);
-//   const [showModal, setShowModal] = useState(false);
-//   const [loadingReviews, setLoadingReviews] = useState(true);
-//   const [error, setError] = useState('');
-
-//   const fetchReviews = async () => {
-//     try {
-//       setLoadingReviews(true);
-//       // const { data } = await axios.get(`http://localhost:2525/api/reviews/style/${style._id}`);
-//       const data = await axios.get(`http://localhost:2525/api/hijab/reviews/style/${style._id}`);
-// ;
-//       setReviews(data);
-//     } catch (err) {
-//       setError('Failed to load reviews');
-//       console.error('Review fetch error:', err.message);
-//     } finally {
-//       setLoadingReviews(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchReviews();
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [style._id]); // safer dependency
-
-//   const avgRating = reviews.length
-//     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
-//     : null;
-
-//   return (
-//     <div className="border p-4 rounded shadow">
-//       <img src={style.image} alt={style.name} className="w-full h-48 object-cover rounded" />
-//       <h3 className="text-xl font-bold mt-2">{style.name}</h3>
-//       <p className="text-gray-700">{style.description}</p>
-
-//       {loadingReviews ? (
-//         <p className="text-sm text-gray-500">Loading reviews...</p>
-//       ) : error ? (
-//         <p className="text-sm text-red-500">{error}</p>
-//       ) : (
-//         <p className="mt-1 text-sm">
-//           ⭐ {avgRating || 'No ratings yet'} ({reviews.length} reviews)
-//         </p>
-//       )}
-
-//       <button
-//         onClick={() => setShowModal(true)}
-//         className="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-//       >
-//         Write Review
-//       </button>
-
-//       {showModal && (
-//         <ReviewModal
-//           styleId={style._id}
-//           onClose={() => setShowModal(false)}
-//           onReviewSubmitted={fetchReviews}
-//         />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default HijabCard;
-
 import { useState, useEffect } from 'react';
 import ReviewModal from './ReviewModal';
 import axios from 'axios';
@@ -115,6 +45,7 @@ const HijabCard = ({ style }) => {
     setEditReview(review);
     setFormData({ text: review.text, rating: review.rating });
     setEditModal(true);
+
   };
 
   const handleUpdate = async () => {
@@ -130,7 +61,7 @@ const HijabCard = ({ style }) => {
 
   return (
     <div className="border p-4 rounded shadow">
-      <img src={style.image} alt={style.name} className="w-full h-48 object-cover rounded" />
+      <img src={style.image} alt={style.name} className="w-full bg-gray-500 h-48 object-cover rounded" />
       <h3 className="text-xl font-bold mt-2">{style.name}</h3>
       <p className="text-gray-700">{style.description}</p>
 
@@ -140,14 +71,47 @@ const HijabCard = ({ style }) => {
         <p className="text-sm text-red-500">{error}</p>
       ) : (
         <>
-          <p className="mt-1 text-sm">
+          <p className="mt-1 text-sm text-white">
             ⭐ {avgRating || 'No ratings yet'} ({reviews.length} reviews)
           </p>
           <div className="mt-2 space-y-2">
-            {reviews.map((review) => (
+            {/* {reviews.map((review) => (
               <div key={review._id} className="bg-gray-100 p-2 rounded">
                 <p className="text-sm">{review.text}</p>
                 <p className="text-xs text-gray-500">Rating: {review.rating}</p>
+                <div className="flex gap-2 mt-1">
+                  <button
+                    onClick={() => handleEdit(review)}
+                    className="text-blue-500 hover:underline text-sm"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(review._id)}
+                    className="text-red-500 hover:underline text-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))} */}
+            {reviews.map((review) => (
+              <div key={review._id} className="bg-gray-100 p-2 rounded">
+                <div className="flex items-center gap-2 mb-1">
+                  {review.user?.profileImage && (
+                    <img
+                      src={review.user.profileImage}
+                      alt={review.user.name}
+                      className="w-8 h-8 bg-gray-500 rounded-full object-cover"
+                    />
+                  )}
+                  <div>
+                    <p className="text-sm font-semibold text-white">{review.user?.name}</p>
+                    <p className="text-xs   text-white">{review.user?.email}</p>
+                  </div>
+                </div>
+                <p className="text-sm text-white">{review.text}</p>
+                <p className="text-xs text-white">Rating: {review.rating}</p>
                 <div className="flex gap-2 mt-1">
                   <button
                     onClick={() => handleEdit(review)}
