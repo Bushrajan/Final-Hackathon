@@ -1,16 +1,9 @@
 import { useState } from 'react';
-import { apiAuthHandle } from '../config/apiAuthHandle';
+// import { apiAuthHandle } from '../config/apiAuthHandle';
+import axios from 'axios';
 
 const ReviewModal = ({ styleId, onClose, onReviewSubmitted }) => {
-  const [rating, setRating] = useState(5);
-  const [text, setText] = useState('');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await apiAuthHandle.post(`/${styleId}/reviews`, { rating, text });
-    onReviewSubmitted();
-    onClose();
-  };
+ 
 
   return (
     <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-white p-6 shadow-lg z-50">

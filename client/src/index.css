@@ -51,8 +51,7 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
 
-}
-
+} 
 
 .card2 {
   width: 300px;
@@ -65,11 +64,10 @@ body {
 
 
 .hijab-style-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
 }
-
+ 
 .hijab-card {
   border: 1px solid #ccc;
   padding: 1rem;

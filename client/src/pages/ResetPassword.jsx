@@ -17,7 +17,7 @@ const ResetPassword = () => {
 
 
 
-  
+
   const handleConfirmPassword = (e) => {
     const value = e.target.value
     setConfirmPassword(value)
@@ -49,10 +49,21 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12">
-      <Toaster position="top-center" />
-      <div className="max-w-md w-full space-y-8">
-        <h2 className="text-3xl text-center font-bold">Set New Password</h2>
+    <div className="relative min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Background Video */}
+      <video autoPlay loop muted className="absolute top-0 left-0 w-full h-full object-cover z-0">
+        <source src="/background.mp4" type="video/mp4" />
+      </video>
+
+      {/* Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 z-10 " />
+
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
+      <div className="max-w-md w-full space-y-8 z-40 z-40 border border-green-500 lg:p-5 p-1 rounded">
+        <h2 className="text-3xl text-center font-bold text-white">Set New Password</h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <input
             type="password"

@@ -33,15 +33,15 @@ app.use('/api/upload', uploadFile)
 // Correctly name the route prefixes
 // app.use('/api/quries', adminQuestionRoutes)
 // app.use('/api/quries', userQuestionRoutes)
-// app.use('/api/admin-questions', adminQuestionRoutes);
-// app.use('/api/user-questions', userQuestionRoutes);
+app.use('/api/admin-questions', adminQuestionRoutes);
+app.use('/api/user-questions', userQuestionRoutes);
 
 
 
 // base hijab route 
 import hijabRoutes from './routes/hijabRoute.js';
 import reviewRoutes from './routes/reviewRoutes.js';
-      // Direct access
+      
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/hijab', hijabRoutes);         // Nested access
 

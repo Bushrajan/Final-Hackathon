@@ -1,5 +1,293 @@
+// import { useState, useEffect } from 'react';
+// import axios from 'axios';
+
+// const HijabCard = ({ style }) => {
+//   const [reviews, setReviews] = useState([]);
+//   const [showModal, setShowModal] = useState(false);
+//   const [editModal, setEditModal] = useState(false);
+//   const [editReview, setEditReview] = useState(null);
+//   const [formData, setFormData] = useState({ text: '', rating: 1 });
+//   const [newReview, setNewReview] = useState({ text: '', rating: 5 });
+//   const [loadingReviews, setLoadingReviews] = useState(true);
+//   const [error, setError] = useState('');
+//   const [likedReviews, setLikedReviews] = useState([]);
+
+//   const token = localStorage.getItem('token');
+
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
+
+//   const fetchReviews = async () => {
+//     try {
+//       setLoadingReviews(true);
+//       const { data } = await axios.get(
+//         `http://localhost:2525/api/reviews/style/${style._id}`,
+//         config
+//       );
+//       setReviews(data);
+//     } catch (err) {
+//       setError('Failed to load reviews');
+//       console.error('Review fetch error:', err.message);
+//     } finally {
+//       setLoadingReviews(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchReviews();
+//   }, [style._id]);
+
+//   useEffect(() => {
+//     const storedLikes = JSON.parse(localStorage.getItem('likedReviews')) || [];
+//     setLikedReviews(storedLikes);
+//   }, []);
+
+//   // const handleLike = (reviewId) => {
+//   //   if (!likedReviews.includes(reviewId)) {
+//   //     const updatedLikes = [...likedReviews, reviewId];
+//   //     setLikedReviews(updatedLikes);
+//   //     localStorage.setItem('likedReviews', JSON.stringify(updatedLikes));
+//   //   }
+//   // };
+
+//   const handleFavorite = (style) => {
+//     const old = JSON.parse(localStorage.getItem("favorites")) || [];
+//     const updated = [...old, style];
+//     localStorage.setItem("favorites", JSON.stringify(updated));
+//   };
+
+
+//   const avgRating = reviews.length
+//     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+//     : null;
+
+//   const handleDelete = async (reviewId) => {
+//     try {
+//       await axios.delete(`http://localhost:2525/api/reviews/${reviewId}`, config);
+//       fetchReviews();
+//     } catch (err) {
+//       console.error('Delete failed:', err.message);
+//     }
+//   };
+
+//   const handleEdit = (review) => {
+//     setEditReview(review);
+//     setFormData({ text: review.text, rating: review.rating });
+//     setEditModal(true);
+//   };
+
+//   const handleUpdate = async () => {
+//     try {
+//       await axios.put(
+//         `http://localhost:2525/api/reviews/${editReview._id}`,
+//         formData,
+//         config
+//       );
+//       setEditModal(false);
+//       setEditReview(null);
+//       fetchReviews();
+//     } catch (err) {
+//       console.error('Update failed:', err.message);
+//     }
+//   };
+
+//   const handleSubmitReview = async (e) => {
+//     e.preventDefault();
+//     try {
+//       await axios.post(
+//         `http://localhost:2525/api/reviews/style/${style._id}`,
+//         newReview,
+//         config
+//       );
+//       setShowModal(false);
+//       setNewReview({ text: '', rating: 5 });
+//       fetchReviews();
+//     } catch (err) {
+//       console.error('Review submission failed:', err.message);
+//     }
+//   };
+
+//   return (
+//     <div className="border w-[300px] h-[640px] p-2 rounded shadow">
+//       <img
+//         src={style.profileImage}
+//         alt={style.name}
+//         className="w-full bg-gray-500 h-70 object-cover rounded"
+//       />
+//       <br />
+//       <h3 className="text-xl font-bold mt-4 text-white">Name: {style.name}</h3>
+//       <p className="text-white">Description: {style.description}</p>
+
+//       {loadingReviews ? (
+//         <p className="text-sm text-gray-500">Loading reviews...</p>
+//       ) : error ? (
+//         <p className="text-sm text-red-500">{error}</p>
+//       ) : (
+//         <>
+//           <p className="mt-4 text-sm text-white">
+//             ⭐ {avgRating || 'No ratings yet'} ({reviews.length} reviews)
+//           </p>
+//           <div className="mt-2 space-y-2">
+//             {reviews.map((review) => (
+//               <div key={review._id} className="font-semibold p-2 rounded">
+//                 <div className="flex items-center gap-2 mb-1">
+//                   {review.user?.profileImage && (
+//                     <img
+//                       src={review.user.profileImage}
+//                       alt={review.user.name}
+//                       className="w-8 h-8 bg-gray-500 rounded-full object-cover"
+//                     />
+//                   )}
+//                   <div>
+//                     <p
+//                       className="text-sm mt-4 bg-yellow-500 p-2 rounded font-semibold text-black"
+//                       style={{ fontSize: '25px' }}
+//                     >
+//                       Current User: {review.user?.name}
+//                     </p>
+//                     <p className="text-xs text-white">{review.user?.email}</p>
+//                   </div>
+//                 </div>
+//                 <p className="text-sm text-white mt-5">
+//                   <strong style={{ fontSize: '15px' }}>Review:</strong> {review.text}
+//                 </p>
+//                 <p className="text-xs text-white mt-5 mb-5">
+//                   <strong style={{ fontSize: '15px' }}>Rating:</strong> {review.rating} ✨✨✨
+//                 </p>
+
+//                 <div className="flex flex-row justify-between gap-2 mt-1 p-1">
+//                   <div className="flex justify-between gap-5">
+//                     <button
+//                       onClick={() => handleEdit(review)}
+//                       className="text-blue-500 border px-1 py-1 rounded hover:underline text-sm"
+//                     >
+//                       📝 Edit
+//                     </button>
+//                     <button
+//                       onClick={() => handleDelete(review._id)}
+//                       className="text-red-500 border px-1 py-1 rounded hover:underline text-sm"
+//                     >
+//                       ❌ Delete
+//                     </button>
+//                     <button
+//                       onClick={() => handleFavorite(review._id)}
+//                       className={`border px-1 py-1 rounded text-sm ${likedReviews.includes(review._id)
+//                           ? 'text-pink-600 bg-pink-100'
+//                           : 'text-orange-500'
+//                         }`}
+//                     >
+//                       {likedReviews.includes(review._id) ? '❤️ Liked' : '💗 Like'}
+//                     </button>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))}
+
+//             <div className="mx-auto">
+//               <button
+//                 onClick={() => setShowModal(true)}
+//                 className="mt-3 w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+//               >
+//                 Write Review
+//               </button>
+//             </div>
+//           </div>
+//         </>
+//       )}
+
+//       {/* Review Modal */}
+//       {showModal && (
+//         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+//           <div className="bg-white p-6 rounded w-full max-w-md">
+//             <h3 className="text-lg font-bold mb-4">Write a Review</h3>
+//             <form onSubmit={handleSubmitReview}>
+//               <textarea
+//                 value={newReview.text}
+//                 onChange={(e) => setNewReview({ ...newReview, text: e.target.value })}
+//                 className="w-full border rounded p-2 mb-2"
+//                 rows={3}
+//                 placeholder="Your review..."
+//               />
+//               <select
+//                 value={newReview.rating}
+//                 onChange={(e) =>
+//                   setNewReview({ ...newReview, rating: Number(e.target.value) })
+//                 }
+//                 className="w-full border rounded p-2 mb-2"
+//               >
+//                 {[5, 4, 3, 2, 1].map((r) => (
+//                   <option key={r} value={r}>
+//                     {r} Stars
+//                   </option>
+//                 ))}
+//               </select>
+//               <div className="flex justify-end gap-2">
+//                 <button
+//                   type="button"
+//                   onClick={() => setShowModal(false)}
+//                   className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
+//                 >
+//                   Cancel
+//                 </button>
+//                 <button
+//                   type="submit"
+//                   className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+//                 >
+//                   Submit
+//                 </button>
+//               </div>
+//             </form>
+//           </div>
+//         </div>
+//       )}
+
+//       {/* Edit Modal */}
+//       {editModal && (
+//         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+//           <div className="bg-white p-6 rounded w-full max-w-md">
+//             <h3 className="text-lg font-bold mb-4">Edit Review</h3>
+//             <textarea
+//               value={formData.text}
+//               onChange={(e) => setFormData({ ...formData, text: e.target.value })}
+//               className="w-full border rounded p-2 mb-2"
+//               rows={3}
+//             />
+//             <input
+//               type="number"
+//               min="1"
+//               max="5"
+//               value={formData.rating}
+//               onChange={(e) =>
+//                 setFormData({ ...formData, rating: Number(e.target.value) })
+//               }
+//               className="w-full border rounded p-2 mb-2"
+//             />
+//             <div className="flex justify-end gap-2">
+//               <button
+//                 onClick={() => setEditModal(false)}
+//                 className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
+//               >
+//                 Cancel
+//               </button>
+//               <button
+//                 onClick={handleUpdate}
+//                 className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+//               >
+//                 Update
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default HijabCard;
 import { useState, useEffect } from 'react';
-import ReviewModal from './ReviewModal';
 import axios from 'axios';
 
 const HijabCard = ({ style }) => {
@@ -8,25 +296,49 @@ const HijabCard = ({ style }) => {
   const [editModal, setEditModal] = useState(false);
   const [editReview, setEditReview] = useState(null);
   const [formData, setFormData] = useState({ text: '', rating: 1 });
+  const [newReview, setNewReview] = useState({ text: '', rating: 5 });
   const [loadingReviews, setLoadingReviews] = useState(true);
   const [error, setError] = useState('');
 
-  const fetchReviews = async () => {
-    try {
-      setLoadingReviews(true);
-      const { data } = await axios.get(`http://localhost:2525/api/reviews/style/${style._id}`);
-      setReviews(data);
-    } catch (err) {
-      setError('Failed to load reviews');
-      console.error('Review fetch error:', err.message);
-    } finally {
-      setLoadingReviews(false);
-    }
+  const token = localStorage.getItem('token');
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
 
   useEffect(() => {
     fetchReviews();
   }, [style._id]);
+
+  const fetchReviews = async () => {
+    try {
+      setLoadingReviews(true);
+      const { data } = await axios.get(
+        `http://localhost:2525/api/reviews/style/${style._id}`,
+        config
+      );
+      setReviews(data);
+    } catch (err) {
+      setError('Failed to load reviews');
+      console.error(err.message);
+    } finally {
+      setLoadingReviews(false);
+    }
+  };
+
+  const handleFavorite = () => {
+    const oldFavs = JSON.parse(localStorage.getItem("favorites")) || [];
+    const alreadyAdded = oldFavs.some((fav) => fav._id === style._id);
+    if (!alreadyAdded) {
+      const updated = [...oldFavs, style];
+      localStorage.setItem("favorites", JSON.stringify(updated));
+      alert("Added to favorites 💗");
+    } else {
+      alert("Already in favorites!");
+    }
+  };
 
   const avgRating = reviews.length
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
@@ -34,7 +346,7 @@ const HijabCard = ({ style }) => {
 
   const handleDelete = async (reviewId) => {
     try {
-      await axios.delete(`http://localhost:2525/api/reviews/${reviewId}`);
+      await axios.delete(`http://localhost:2525/api/reviews/${reviewId}`, config);
       fetchReviews();
     } catch (err) {
       console.error('Delete failed:', err.message);
@@ -45,12 +357,15 @@ const HijabCard = ({ style }) => {
     setEditReview(review);
     setFormData({ text: review.text, rating: review.rating });
     setEditModal(true);
-
   };
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:2525/api/reviews/${editReview._id}`, formData);
+      await axios.put(
+        `http://localhost:2525/api/reviews/${editReview._id}`,
+        formData,
+        config
+      );
       setEditModal(false);
       setEditReview(null);
       fetchReviews();
@@ -59,97 +374,149 @@ const HijabCard = ({ style }) => {
     }
   };
 
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        `http://localhost:2525/api/reviews/style/${style._id}`,
+        newReview,
+        config
+      );
+      setShowModal(false);
+      setNewReview({ text: '', rating: 5 });
+      fetchReviews();
+    } catch (err) {
+      console.error('Review submission failed:', err.message);
+    }
+  };
+
   return (
-    <div className="border p-4 rounded shadow">
-      <img src={style.image} alt={style.name} className="w-full bg-gray-500 h-48 object-cover rounded" />
-      <h3 className="text-xl font-bold mt-2">{style.name}</h3>
-      <p className="text-gray-700">{style.description}</p>
+    <div className="border w-[300px] h-[640px] p-4 bg-gray-900 rounded-lg shadow text-white">
+      <img
+        src={style.profileImage}
+        alt={style.name}
+        className="w-full h-60 object-cover rounded mb-3"
+      />
+      <h3 className="text-xl font-bold">Name: {style.name}</h3>
+      <p className="text-sm mb-2">Description: {style.description}</p>
 
       {loadingReviews ? (
-        <p className="text-sm text-gray-500">Loading reviews...</p>
+        <p className="text-gray-400 text-sm">Loading reviews...</p>
       ) : error ? (
-        <p className="text-sm text-red-500">{error}</p>
+        <p className="text-red-400 text-sm">{error}</p>
       ) : (
         <>
-          <p className="mt-1 text-sm text-white">
+          <p className="text-sm mt-2">
             ⭐ {avgRating || 'No ratings yet'} ({reviews.length} reviews)
           </p>
-          <div className="mt-2 space-y-2">
-            {/* {reviews.map((review) => (
-              <div key={review._id} className="bg-gray-100 p-2 rounded">
-                <p className="text-sm">{review.text}</p>
-                <p className="text-xs text-gray-500">Rating: {review.rating}</p>
-                <div className="flex gap-2 mt-1">
-                  <button
-                    onClick={() => handleEdit(review)}
-                    className="text-blue-500 hover:underline text-sm"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(review._id)}
-                    className="text-red-500 hover:underline text-sm"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))} */}
+
+          <div className="mt-2 space-y-3 max-h-[220px] overflow-y-auto pr-2">
             {reviews.map((review) => (
-              <div key={review._id} className="bg-gray-100 p-2 rounded">
-                <div className="flex items-center gap-2 mb-1">
+              <div key={review._id} className="bg-gray-800 p-3 rounded">
+                <div className="flex items-center gap-2 mb-2">
                   {review.user?.profileImage && (
                     <img
                       src={review.user.profileImage}
                       alt={review.user.name}
-                      className="w-8 h-8 bg-gray-500 rounded-full object-cover"
+                      className="w-8 h-8 rounded-full object-cover"
                     />
                   )}
                   <div>
-                    <p className="text-sm font-semibold text-white">{review.user?.name}</p>
-                    <p className="text-xs   text-white">{review.user?.email}</p>
+                    <p className="text-sm font-semibold">{review.user?.name}</p>
+                    <p className="text-xs text-gray-400">{review.user?.email}</p>
                   </div>
                 </div>
-                <p className="text-sm text-white">{review.text}</p>
-                <p className="text-xs text-white">Rating: {review.rating}</p>
-                <div className="flex gap-2 mt-1">
+                <p className="text-sm">
+                  <strong>Review:</strong> {review.text}
+                </p>
+                <p className="text-sm">
+                  <strong>Rating:</strong> {review.rating} ✨
+                </p>
+                <div className="flex gap-2 mt-2 text-sm">
                   <button
                     onClick={() => handleEdit(review)}
-                    className="text-blue-500 hover:underline text-sm"
+                    className="text-blue-400 hover:underline"
                   >
-                    Edit
+                    📝 Edit
                   </button>
                   <button
                     onClick={() => handleDelete(review._id)}
-                    className="text-red-500 hover:underline text-sm"
+                    className="text-red-400 hover:underline"
                   >
-                    Delete
+                    ❌ Delete
                   </button>
                 </div>
               </div>
             ))}
           </div>
+
+          <div className="mt-4 flex flex-col gap-2">
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            >
+              Write Review
+            </button>
+            <button
+              onClick={handleFavorite}
+              className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded"
+            >
+              💗 Add to Favorites
+            </button>
+          </div>
         </>
       )}
 
-      <button
-        onClick={() => setShowModal(true)}
-        className="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Write Review
-      </button>
-
+      {/* Write Review Modal */}
       {showModal && (
-        <ReviewModal
-          styleId={style._id}
-          onClose={() => setShowModal(false)}
-          onReviewSubmitted={fetchReviews}
-        />
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white text-black p-6 rounded w-full max-w-md">
+            <h3 className="text-lg font-bold mb-4">Write a Review</h3>
+            <form onSubmit={handleSubmitReview}>
+              <textarea
+                value={newReview.text}
+                onChange={(e) => setNewReview({ ...newReview, text: e.target.value })}
+                className="w-full border rounded p-2 mb-2"
+                rows={3}
+                placeholder="Your review..."
+              />
+              <select
+                value={newReview.rating}
+                onChange={(e) =>
+                  setNewReview({ ...newReview, rating: Number(e.target.value) })
+                }
+                className="w-full border rounded p-2 mb-2"
+              >
+                {[5, 4, 3, 2, 1].map((r) => (
+                  <option key={r} value={r}>
+                    {r} Stars
+                  </option>
+                ))}
+              </select>
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="bg-gray-300 px-3 py-1 rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-green-600 text-white px-3 py-1 rounded"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
 
+      {/* Edit Review Modal */}
       {editModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded w-full max-w-md">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white text-black p-6 rounded w-full max-w-md">
             <h3 className="text-lg font-bold mb-4">Edit Review</h3>
             <textarea
               value={formData.text}
@@ -168,13 +535,13 @@ const HijabCard = ({ style }) => {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setEditModal(false)}
-                className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
+                className="bg-gray-300 px-3 py-1 rounded"
               >
                 Cancel
               </button>
               <button
                 onClick={handleUpdate}
-                className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+                className="bg-green-600 text-white px-3 py-1 rounded"
               >
                 Update
               </button>

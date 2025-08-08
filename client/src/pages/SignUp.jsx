@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link,  useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import toast, { Toaster } from 'react-hot-toast';
 import { set_verification_Email, setToken, setUser } from '../utils/auth';
@@ -74,14 +74,22 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Background Video */}
+      <video autoPlay loop muted className="absolute top-0 left-0 w-full h-full object-cover z-0">
+        <source src="/background.mp4" type="video/mp4" />
+      </video>
+
+      {/* Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 z-10 " />
+
       <Toaster
         position="top-center"
         reverseOrder={false}
       />
-      <div className="max-w-md w-full space-y-8">
+      <div className="max-w-md w-full space-y-8 z-40 z-40 border border-green-500 lg:p-5 p-1 rounded">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
             Create your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
@@ -144,7 +152,7 @@ const SignUp = () => {
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   required
-                  
+
                   className="appearance-none rounded-md relative block w-full px-10 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                   value={formData.password}

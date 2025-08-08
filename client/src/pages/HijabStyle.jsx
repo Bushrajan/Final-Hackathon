@@ -32,11 +32,11 @@ const HijabStyle = () => {
   }
 
   if (!styles.length) {
-    return <div className="p-4 text-gray-500">No hijab styles found.</div>;
+    return <div className="p-4 text-center mt-5 text-gray-500">No hijab styles found.</div>;
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+    <div className="flex flex-wrap gap-2 p-4 justify-center items-center ">
       {styles.map(style => (
         <HijabCard key={style._id} style={style} />
       ))}
