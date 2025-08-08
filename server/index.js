@@ -42,7 +42,7 @@ app.use('/api/user-questions', userQuestionRoutes);
 import hijabRoutes from './routes/hijabRoute.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 
-app.use('/api/reviews', reviewRoutes);     // Direct access
+app.use('api/hijab/reviews', reviewRoutes);     // Direct access
 app.use('/api/hijab', reviewRoutes);
 app.use('/api/hijab', hijabRoutes);         // Nested access
 

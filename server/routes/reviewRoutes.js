@@ -1,12 +1,27 @@
 import express from 'express';
-import { createReview, getReviewsByStyle } from '../controllers/reviewController.js';
-import { middlewareToProtect } from '../middleware/authMiddleware.js';
+import {
+  createReview,
+  getReviewsByStyle,
+  deleteReview,
+  deleteAllReviews,
+  updateReview
+} from '../controllers/reviewController.js';
 
 const router = express.Router();
 
-router.post('/:id/reviews', middlewareToProtect, createReview);
-router.get('/:id/reviews', getReviewsByStyle);
+// Create review
+router.post('/style/:styleId', createReview);
 
+// Get all reviews for a style
+router.get('/style/:styleId', getReviewsByStyle);
 
+// Delete one review
+router.delete('/:id', deleteReview);
+
+// Delete all reviews for a style
+router.delete('/style/:styleId', deleteAllReviews);
+
+// Update review
+router.put('/:id', updateReview);
 
 export default router;

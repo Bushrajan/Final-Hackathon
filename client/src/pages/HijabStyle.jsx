@@ -10,7 +10,7 @@ const HijabStyle = () => {
   useEffect(() => {
     const fetchStyles = async () => {
       try {
-        const { data } = await axios.get('http://localhost:2525/api/hijab/seed');
+        const { data } = await axios.get('http://localhost:2525/api/hijab'); // ✅ Correct route
         setStyles(data);
       } catch (err) {
         setError('Failed to load hijab styles');
