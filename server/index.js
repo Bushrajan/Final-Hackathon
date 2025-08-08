@@ -7,8 +7,8 @@ import adminRoutes from './routes/adminRoutes.js';
 import uploadFile from './routes/common.js';
 import userRoutes from './routes/userRoutes.js';
 import fileUpload from 'express-fileupload';
-import adminQuestionRoutes from './routes/admin_Ques_Ans_Routes.js';
-import userQuestionRoutes from './routes/user_Ques_Ans_Routes.js';
+// import adminQuestionRoutes from './routes/admin_Ques_Ans_Routes.js';
+// import userQuestionRoutes from './routes/user_Ques_Ans_Routes.js'; 
 
 // Load environment variables
 dotenv.config();
@@ -29,17 +29,27 @@ app.use('/api/auth', authRoutes)
 app.use('/api/auth', userRoutes)
 app.use('/api/auth', adminRoutes)
 app.use('/api/upload', uploadFile)
-// app.use('/api/quries', adminQuestionRoutes)
-// app.use('/api/quries', userQuestionRoutes)
 
 // Correctly name the route prefixes
-app.use('/api/admin-questions', adminQuestionRoutes);
-app.use('/api/user-questions', userQuestionRoutes);
+// app.use('/api/quries', adminQuestionRoutes)
+// app.use('/api/quries', userQuestionRoutes)
+// app.use('/api/admin-questions', adminQuestionRoutes);
+// app.use('/api/user-questions', userQuestionRoutes);
+
+
+
+// base hijab route
+import reviewRoutes from './routes/reviewRoutes.js';
+import hijabRoutes from './routes/hijabRoute.js';
+
+app.use('/api/reviews', reviewRoutes);     // Direct access
+app.use('/api/hijab', hijabRoutes);        // Nested access
+
 
 
 // Test route
 app.get('/', (req, res) => {
-  res.json({ message: 'Auth Server is running!' });
+  res.json({ message: 'Complete Server Deploymet!' });
 });
 
 // Database connection

@@ -62,7 +62,9 @@ const userSchema = new mongoose.Schema({
   github: {
     type: String,
     default: ''
-  }
+  },
+  
+
 }, {
   timestamps: true
 });
