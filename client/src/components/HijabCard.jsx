@@ -103,7 +103,7 @@ const HijabCard = ({ style }) => {
   };
 
   return (
-    <div className="border w-[300px] h-[640px] p-4 bg-gray-900 rounded-lg shadow text-white">
+    <div className="border  overflow-hidden p-4 bg-gray-900 rounded-lg shadow text-white">
       <img
         src={style.profileImage}
         alt={style.name}
@@ -122,7 +122,7 @@ const HijabCard = ({ style }) => {
             ⭐ {avgRating || 'No ratings yet'} ({reviews.length} reviews)
           </p>
 
-          <div className="mt-2 space-y-3 max-h-[220px] overflow-y-auto pr-2">
+          <div className="mt-2 space-y-3  pr-2">
             {reviews.map((review) => (
               <div key={review._id} className="bg-gray-800 p-3 rounded">
                 <div className="flex items-center gap-2 mb-2">

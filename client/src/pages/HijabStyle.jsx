@@ -36,7 +36,7 @@ const HijabStyle = () => {
   }
 
   return (
-    <div className="flex flex-wrap gap-2 p-4 justify-center items-center ">
+    <div className="flex flex-wrap gap-2 p-4 justify-center   ">
       {styles.map(style => (
         <HijabCard key={style._id} style={style} />
       ))}
