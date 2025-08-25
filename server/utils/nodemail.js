@@ -24,14 +24,14 @@ const verifyConnection = async () => {
 
 const sendVerifyOTP = async (recipientEmail, otpCode) => {
   const mailOptions = {
-    from: `"Q&A Board" <${process.env.EMAIL_USER}>`, // Fixed syntax
+    from: `"Hijabi_Gallary" <${process.env.EMAIL_USER}>`, // Fixed syntax
     to: recipientEmail,
     subject: 'Verify Your Email - OTP Code',
     html: `
        <div style="max-width: 520px; margin: auto; font-family: 'Segoe UI', sans-serif; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 30px;">
       <h2 style="color: #4CAF50; text-align: center; font-size:30px;">📩 Email Verification</h2>
         <p>Hi there 👋</p> <br>
-        <p>We received a request to reset your password for your <strong>Q&A Board</strong> account.</p>
+        <p>We received a request to reset your password for your <strong>Hijabi_Gallary</strong> account.</p>
         <p>Click the secure link below to proceed:</p> <br>
         <div style="word-break: break-all; background: #f0f0f0; padding: 12px; border-radius: 8px; text-align: center;">
         <p style="color: #333; background: #f0f0f0; padding: 10px; border-radius: 5px;">${otpCode}</p>
@@ -39,7 +39,7 @@ const sendVerifyOTP = async (recipientEmail, otpCode) => {
       <br>
         <p class="text-center mb-6">This OTP will expire in <strong style="color: #4CAF50">10 minutes</strong>. <br>
            If you didn’t see this request, <strong style="color: red;">you can't verify your account.</strong> 🛡️</p>
-        <p style="text-align: right; color: #06de1c;">— Q&A Board Team</p>
+        <p style="text-align: right; color: #06de1c;">— Hijabi_Gallary Team</p>
       </div>
 
     `,
@@ -65,21 +65,21 @@ export default sendVerifyOTP;
 
 export const sendForgetPassword = async (recipientEmail, resetURL) => {
   const mailOptions = {
-    from: `"Q&A Board" <${process.env.EMAIL_USER}>`,
+    from: `"Hijabi_Gallary" <${process.env.EMAIL_USER}>`,
     to: recipientEmail,
     subject: 'Reset Password',
     html: ` 
            <div style="max-width: 520px; margin: auto; font-family: 'Segoe UI', sans-serif; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 30px;">
       <h2 style="color: #FF9800; text-align: center; font-size:30px;">🔐 Reset Your Password</h2>
         <p>Hi there 👋</p> <br>
-        <p>We received a request to reset your password for your <strong>Q&A Board</strong> account.</p>
+        <p>We received a request to reset your password for your <strong>Hijabi_Gallary</strong> account.</p>
         <p>Click the secure link below to proceed:</p> <br>
         <div style="word-break: break-all; background: #f0f0f0; padding: 12px; border-radius: 8px; text-align: center;">
         <p style="color: #333; background: #f0f0f0; padding: 10px; border-radius: 5px;">${resetURL}</p>
       </div>
       <br>
         <p>This link will expire in <strong>30 minutes</strong>. If you didn’t request this, you can safely ignore it. 🛡️</p>
-        <p style="text-align: right; color: #FF9800;">— Q&A Board Team</p>
+        <p style="text-align: right; color: #FF9800;">— Hijabi_Gallary Team</p>
       </div>
 
     `,
@@ -99,14 +99,14 @@ export const sendForgetPassword = async (recipientEmail, resetURL) => {
 // Notify user when admin answers their question
 export const sendAnswerNotification = async (recipientEmail, questionTitle, questiondescription, answer) => {
   const mailOptions = {
-    from: `"Q&A Board" <${process.env.EMAIL_USER}>`,
+    from: `"Hijabi_Gallary" <${process.env.EMAIL_USER}>`,
     to: recipientEmail,
     subject: 'Your Question Has Been Answered!',
     html: `
   <div style="max-width: 560px; margin: auto; font-family: 'Segoe UI', sans-serif; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 30px;">
     <h2 style="color: #4CAF50; text-align: center;">📬 Your Question Has Been Answered!</h2>
     <p>Hi there 👋</p>
-    <p>Our admin team has responded to your question on <strong>Q&A Board</strong>. Here's the summary:</p>
+    <p>Our admin team has responded to your question on <strong>Hijabi_Gallary</strong>. Here's the summary:</p>
 
     <div style="margin: 20px 0;">
       <strong style="color: #333;">📝 Title:</strong>
@@ -130,7 +130,7 @@ export const sendAnswerNotification = async (recipientEmail, questionTitle, ques
     </div>
 
     <p>If you have more questions, feel free to ask anytime. We're here to help! 💬</p>
-    <p style="text-align: right; color: #4CAF50;">— Q&A Board Team</p>
+    <p style="text-align: right; color: #4CAF50;">— Hijabi_Gallary Team</p>
   </div>
 `
 

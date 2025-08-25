@@ -450,13 +450,6 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    setActiveTab(currentUser.role === 'admin' ? 'dashboard' : 'profile');
-    if (currentUser.role === 'admin') {
-      getStats();
-    }
-  }, [currentUser.role]);
-
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
