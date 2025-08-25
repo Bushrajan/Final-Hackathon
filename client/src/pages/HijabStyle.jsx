@@ -10,7 +10,7 @@ const HijabStyle = () => {
   useEffect(() => {
     const fetchStyles = async () => {
       try {
-        const { data } = await axios.get('https://hackathonserver-production.up.railway.app/api/hijab'); // ✅ Correct route
+        const { data } = await axios.get('https://final-hackathon-server-ten.vercel.app/api/hijab'); // ✅ Correct route
         setStyles(data);
       } catch (err) {
         setError('Failed to load hijab styles');
